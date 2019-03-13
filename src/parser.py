@@ -42,7 +42,7 @@ class Parser:
             }
 
             get_all = soup.find('a', {'class': 'Pad__corner al_empty'})
-            data['artists']['full'] = get_all['href']
+            data['artists']['full'] = get_all['href'] if get_all else ''
 
             for link in soup.find_all('a', {'class': 'OwnerRow__content'}):
                 data['artists']['list'].append({
@@ -58,7 +58,7 @@ class Parser:
             }
 
             get_all = soup.find('a', {'class': 'Pad__corner al_empty'})
-            data['playlists']['full'] = get_all['href']
+            data['playlists']['full'] = get_all['href'] if get_all else ''
 
             for playlist in soup.find_all('div', {'class': 'audioPlaylists__item'}):
                 link = playlist.find('a', {'class': 'audioPlaylists__itemLink al_playlist'})
@@ -79,7 +79,7 @@ class Parser:
             }
 
             get_all = soup.find('a', {'class': 'Pad__corner al_empty'})
-            data['tracks']['full'] = get_all['href']
+            data['tracks']['full'] = get_all['href'] if get_all else ''
 
             for track in soup.find_all('div', {'class': 'audio_item'}):
                 data_id = track['data-id']
