@@ -1,9 +1,10 @@
 import sys
-
 import urllib
 
 from bs4 import BeautifulSoup
 from requests import Session
+
+from src.utils import logger
 
 
 class Parser:
@@ -111,4 +112,4 @@ class Parser:
         if result.url != 'https://m.vk.com/':
             sys.exit('Username or password are incorrect')
         else:
-            print('VK Authorized')
+            logger.info('VK Authorized')

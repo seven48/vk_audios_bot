@@ -1,22 +1,29 @@
-import src.bot
 import src.models
 import src.stack
 
-from src.utils.logger import log
+from src.utils import logger
 
 bot = src.bot.app
-parser = src.bot.parser
-
 
 @bot.message_handler(content_types=['text'])
 def helper(message):
     output = bot.send_message(
         message.chat.id,
-        log('Search', message.text),
+        logger.bot('Search', message.text),
         parse_mode="Markdown"
     )
 
     user = src.models.User.create(message.from_user)
+
+    logger.info(
+        'Message "{}" in "{}" from "@{} ({})"'
+        .format(
+            message.text.replace('\n', '\\n'),
+            message.chat.id,
+            user.username,
+            user.user_id
+        )
+    )
 
     src.models.Queue.add(
         _type='Search',

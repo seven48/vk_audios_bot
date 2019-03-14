@@ -18,4 +18,9 @@ password = os.environ.get('PASSWORD')
 if not username or not password:
     sys.exit('USERNAME and PASSWORD are required')
 
+if os.environ.get('PROXY'):
+    telebot.apihelper.proxy = {
+        "https": os.environ.get('PROXY')
+    }
+
 parser = src.parser.Parser(username, password)
