@@ -1,0 +1,31 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [{
+        "name": "Run bot",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}/app.py",
+        "envFile": "${workspaceFolder}/.env",
+        "console": "integratedTerminal",
+        "env": {
+            "PROC_COUNT": 0,
+            "PROXY": "",
+            "TOKEN": "",
+            "USERNAME": "",
+            "PASSWORD": ""
+        }
+    }, {
+        "name": "Run worker",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}/src/stack.py",
+        "envFile": "${workspaceFolder}/.env",
+        "console": "integratedTerminal",
+        "env": {
+            "PYTHONPATH": "${workspaceFolder}"
+        }
+    }]
+}

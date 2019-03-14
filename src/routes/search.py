@@ -25,10 +25,6 @@ def helper(message):
         output=output.json
     )
 
-    pop = src.models.Queue.pop()
-    print(pop)
-    import pdb; pdb.set_trace()
-
     # parser.search(message.text)
 
     # bot.edit_message_text(
