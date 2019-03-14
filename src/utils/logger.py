@@ -15,6 +15,7 @@ def bot(name, *args):
         else:
             return name.format(*args)
 
+
 def info(text):
     prefix = '[ {} ]'.format(datetime.now().strftime('%x %X'))
     stderr.write('{} {}\n'.format(prefix, text))

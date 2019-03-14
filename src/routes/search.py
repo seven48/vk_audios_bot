@@ -5,6 +5,7 @@ from src.utils import logger
 
 bot = src.bot.app
 
+
 @bot.message_handler(content_types=['text'])
 def helper(message):
     output = bot.send_message(

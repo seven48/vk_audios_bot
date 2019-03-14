@@ -2,8 +2,6 @@ import os
 
 from multiprocessing import Process
 
-import telebot
-
 import src.routes
 import src.bot
 import src.stack

@@ -5,6 +5,7 @@ from src.utils import logger
 bot = src.bot.app
 parser = src.bot.parser
 
+
 def search_type_handler(task):
     context = parser.search(task.message['text'])
 
@@ -18,6 +19,7 @@ def search_type_handler(task):
         chat_id=task.output['chat']['id'],
         message_id=task.output['message_id']
     )
+
 
 def run():
     handlers = {
@@ -54,6 +56,7 @@ def run():
         #     )
         finally:
             Queue.done(task.id)
+
 
 if __name__ == "__main__":
     run()

@@ -1,4 +1,4 @@
 import src.routes.start
 import src.routes.help
 
-import src.routes.search
+import src.routes.search  # noqa: F401

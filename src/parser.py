@@ -36,7 +36,7 @@ class Parser:
         }
 
         # Artists
-        if soup.find('div', {'class': 'AudioShowcase__block AudioShowcase__block_custom_image_small'}):
+        if soup.find('div', {'class': 'AudioShowcase__block AudioShowcase__block_custom_image_small'}):  # noqa: E501
             data['artists'] = {
                 'full': '',
                 'list': []
@@ -61,10 +61,10 @@ class Parser:
             get_all = soup.find('a', {'class': 'Pad__corner al_empty'})
             data['playlists']['full'] = get_all['href'] if get_all else ''
 
-            for playlist in soup.find_all('div', {'class': 'audioPlaylists__item'}):
-                link = playlist.find('a', {'class': 'audioPlaylists__itemLink al_playlist'})
-                title = playlist.find('span', {'class': 'audioPlaylists__itemTitle'})
-                subtitle = playlist.find('div', {'class': 'audioPlaylists__itemSubtitle'})
+            for playlist in soup.find_all('div', {'class': 'audioPlaylists__item'}):  # noqa: E501
+                link = playlist.find('a', {'class': 'audioPlaylists__itemLink al_playlist'})  # noqa: E501
+                title = playlist.find('span', {'class': 'audioPlaylists__itemTitle'})  # noqa: E501
+                subtitle = playlist.find('div', {'class': 'audioPlaylists__itemSubtitle'})  # noqa: E501
 
                 data['playlists']['list'].append({
                     'link': link['href'],
@@ -73,7 +73,7 @@ class Parser:
                 })
 
         # Tracks
-        if soup.find('div', {'class': 'AudioShowcase__block AudioShowcase__block_audios'}):
+        if soup.find('div', {'class': 'AudioShowcase__block AudioShowcase__block_audios'}):  # noqa: E501
             data['tracks'] = {
                 'full': '',
                 'list': []

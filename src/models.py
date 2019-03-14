@@ -6,13 +6,14 @@ import mongoengine as mongo
 
 mongo.connect('project1', host='0.0.0.0', port=27017)
 
+
 class User(mongo.Document):
     user_id = mongo.IntField(unique=True)
     first_name = mongo.StringField()
     last_name = mongo.StringField()
     username = mongo.StringField(unique=True)
-    is_bot=mongo.BooleanField()
-    language_code=mongo.StringField()
+    is_bot = mongo.BooleanField()
+    language_code = mongo.StringField()
 
     context = mongo.DictField()
 
@@ -39,6 +40,7 @@ class User(mongo.Document):
         except mongo.DoesNotExist:
             return None
 
+
 class Queue(mongo.Document):
     _type = mongo.StringField()
     user = mongo.ReferenceField(User)
@@ -58,7 +60,7 @@ class Queue(mongo.Document):
     @staticmethod
     def done(_id):
         try:
-            task = Queue.objects.get(id = _id)
+            task = Queue.objects.get(id=_id)
             task.update(finished=datetime.datetime.now())
             task.save()
             return True
