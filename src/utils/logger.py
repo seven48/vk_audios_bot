@@ -17,5 +17,5 @@ def bot(name, *args):
 
 
 def info(text):
-    prefix = '[ {} ]'.format(datetime.now().strftime('%x %X'))
-    stderr.write('{} {}\n'.format(prefix, text))
+    prefix = f'[ {datetime.now().strftime("%x %X")} ]'
+    stderr.write(f'{prefix} {text}\n')

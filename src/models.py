@@ -1,5 +1,3 @@
-# pylint: disable=maybe-no-member
-
 import datetime
 
 import mongoengine as mongo
@@ -8,14 +6,17 @@ mongo.connect('project1', host='0.0.0.0', port=27017)
 
 
 class User(mongo.Document):
-    user_id = mongo.IntField(unique=True)
-    first_name = mongo.StringField()
-    last_name = mongo.StringField()
+    user_id = mongo.IntField(
+        unique=True,
+        required=True
+    )
+    first_name = mongo.StringField(null=True)
+    last_name = mongo.StringField(null=True)
     username = mongo.StringField(unique=True)
     is_bot = mongo.BooleanField()
     language_code = mongo.StringField()
 
-    context = mongo.DictField()
+    context = mongo.DictField(default={})
 
     @staticmethod
     def create(user):
@@ -42,14 +43,17 @@ class User(mongo.Document):
 
 
 class Queue(mongo.Document):
-    _type = mongo.StringField()
-    user = mongo.ReferenceField(User)
-    message = mongo.DictField()
-    output = mongo.DictField()
+    type = mongo.StringField(required=True)
+    user = mongo.ReferenceField(
+        User,
+        required=True
+    )
+    message = mongo.DictField(required=True)
+    output = mongo.DictField(required=True)
 
     created = mongo.DateTimeField(default=datetime.datetime.now)
-    started = mongo.DateTimeField()
-    finished = mongo.DateTimeField()
+    started = mongo.DateTimeField(null=True)
+    finished = mongo.DateTimeField(null=True)
 
     @staticmethod
     def add(**kwargs):
