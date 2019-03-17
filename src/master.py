@@ -2,7 +2,7 @@ import os
 
 from multiprocessing import Process
 
-from src.handler import Handler
+from src.handler import SearchHandler
 from src.models import Queue
 from src.utils import logger
 
@@ -28,8 +28,12 @@ class MasterProcess:
             if not task:
                 break
 
+            handlers = {
+                'Search': SearchHandler
+            }
+
             process = Process(
-                target=Handler,
+                target=handlers.get(task.type),
                 args=(task, self._get_done_func(task.id))
             )
             process.start()
