@@ -1,5 +1,4 @@
 import src.models
-import src.stack
 
 from src.utils import logger
 
@@ -27,17 +26,8 @@ def helper(message):
     )
 
     src.models.Queue.add(
-        _type='Search',
+        type='Search',
         user=user,
         message=message.json,
         output=output.json
     )
-
-    # parser.search(message.text)
-
-    # bot.edit_message_text(
-    #     'done',
-    #     chat_id=message.chat.id,
-    #     message_id=output.message_id,
-    #     parse_mode='Markdown'
-    # )

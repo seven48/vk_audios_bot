@@ -2,7 +2,7 @@ import sys
 import urllib
 
 from bs4 import BeautifulSoup
-from requests import Session
+from requests import Session, exceptions
 
 from src.utils import logger
 
@@ -23,7 +23,10 @@ class Parser:
         }
         link = 'https://m.vk.com/audio?{}'.format(urllib.parse.urlencode(url))
 
-        response = self.session.get(link)
+        try:
+            response = self.session.get(link)
+        except exceptions.SSLError:
+            response = self.session.get(link, verify=False)
 
         soup = BeautifulSoup(response.text, 'html.parser')
 
