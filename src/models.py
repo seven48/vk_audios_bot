@@ -1,8 +1,11 @@
 import datetime
+import os
 
 import mongoengine as mongo
 
-mongo.connect('project1', host='0.0.0.0', port=27017)
+mongo_host = os.environ.get('MONGO_HOST', 'mongodb://localhost:27017/vkbot')
+
+mongo.connect(host=mongo_host)
 
 
 class User(mongo.Document):
