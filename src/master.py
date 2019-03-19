@@ -11,7 +11,14 @@ class MasterProcess:
         self.queue = queue
         self._proc_count = int(os.environ.get('PROC_COUNT', '1'))
 
-        self._allocate()
+        try:
+            self._allocate()
+        except KeyboardInterrupt:
+            logger.error('Shutting down by keyboard interrupt...')
+            for process in self._processes:
+                process.terminate()
+                pid = process.ident
+                logger.info(f'Process {pid} killed')
 
     def _allocate(self):
         # Task allocation
