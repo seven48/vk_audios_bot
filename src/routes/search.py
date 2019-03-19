@@ -1,33 +1,14 @@
-import src.models
-
-from src.utils import logger
+import src.bot
+from src.routes.abstract_route import Route
 
 bot = src.bot.app
 
 
 @bot.message_handler(content_types=['text'])
-def helper(message):
-    output = bot.send_message(
-        message.chat.id,
-        logger.bot('Search', message.text),
-        parse_mode="Markdown"
-    )
-
-    user = src.models.User.create(message.from_user)
-
-    logger.info(
-        'Message "{}" in "{}" from "@{} ({})"'
-        .format(
-            message.text.replace('\n', '\\n'),
-            message.chat.id,
-            user.username,
-            user.user_id
+class SearchRoute(Route):
+    def primary(self):
+        return bot.send_message(
+            self.message.chat.id,
+            f'Поиск по запросу `{self.message.text}`',
+            parse_mode="Markdown"
         )
-    )
-
-    src.models.Queue.add(
-        type='Search',
-        user=user,
-        message=message.json,
-        output=output.json
-    )
