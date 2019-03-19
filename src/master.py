@@ -23,13 +23,13 @@ class MasterProcess:
     def _allocate(self):
         # Task allocation
         while True:
-            # Clear process stac
+            # Clear process stack
             for process in self._processes:
                 if not process.is_alive():
                     pid = process.ident
                     code = process.exitcode
 
-                    logger.info(f'Process ${pid} completed with code {code}')
+                    logger.info(f'Process {pid} completed with code {code}')
 
                     self._processes.remove(process)
 
