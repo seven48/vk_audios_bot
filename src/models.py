@@ -1,4 +1,3 @@
-import datetime
 import os
 
 import mongoengine as mongo
@@ -42,45 +41,4 @@ class User(mongo.Document):
         try:
             return User.objects.get(user_id=user.id)
         except mongo.DoesNotExist:
-            return None
-
-
-class Queue(mongo.Document):
-    type = mongo.StringField(required=True)
-    user = mongo.ReferenceField(
-        User,
-        required=True
-    )
-    message = mongo.DictField(required=True)
-    output = mongo.DictField(required=True)
-
-    created = mongo.DateTimeField(default=datetime.datetime.now)
-    started = mongo.DateTimeField(null=True)
-    finished = mongo.DateTimeField(null=True)
-
-    @staticmethod
-    def add(**kwargs):
-        record = Queue(**kwargs)
-        record.save()
-        return record
-
-    @staticmethod
-    def done(_id):
-        try:
-            task = Queue.objects.get(id=_id)
-            task.update(finished=datetime.datetime.now())
-            task.save()
-            return True
-        except mongo.DoesNotExist:
-            return False
-
-    @staticmethod
-    def pop():
-        query = Queue.objects(started=None, finished=None)
-        if query:
-            task = query[0]
-            task.update(started=datetime.datetime.now())
-            task.save()
-            return task
-        else:
             return None
