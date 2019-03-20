@@ -1,5 +1,7 @@
 import src.bot
 from src.routes.abstract_route import Route
+from src.models import Track, Artist, Playlist
+from src.utils.escape import telegram_escape
 
 bot = src.bot.app
 parser = src.bot.parser
@@ -45,11 +47,14 @@ class SearchRoute(Route):
         if not playlists:
             return ''
 
-        title = f'{len(playlists["list"])} плейлистов'
+        title = 'Плейлисты'
 
         items = []
         for item in playlists['list']:
-            items.append(f'*{item["title"]}* - _{item["subtitle"]}_')
+            record = Playlist.create(item)
+            _title = telegram_escape(item["title"])
+            subtitle = telegram_escape(item["subtitle"])
+            items.append(f'/p\_{record.owner_id}\_{record.data_id} *{_title}* - _{subtitle}_')  # noqa: W605,E501
 
         return f'{title}\n' + \
             '\n'.join(items) + \
@@ -60,11 +65,14 @@ class SearchRoute(Route):
         if not artists:
             return ''
 
-        title = f'{len(artists["list"])} исполнителей'
+        title = 'Исполнители'
 
         items = []
         for item in artists['list']:
-            items.append(f'*{item["name"]}*')
+            record = Artist.create(item)
+            name = telegram_escape(item["name"])
+            link = telegram_escape(record.link)
+            items.append(f'/a\_{link} *{name}*')  # noqa: W605
 
         return f'{title}\n' + \
             '\n'.join(items) + \
@@ -75,11 +83,16 @@ class SearchRoute(Route):
         if not tracks:
             return ''
 
-        title = f'{len(tracks["list"])} композиций'
+        title = 'Композиции'
 
         items = []
         for item in tracks['list']:
-            items.append(f'*{item["artist"]}* - {item["title"]}')
+            record = Track.create(item)
+            artist = telegram_escape(item["artist"])
+            _title = telegram_escape(item["title"])
+            items.append(
+                f'/t\_{record.owner_id}\_{record.data_id} *{artist}* - {_title}'  # noqa: W605,E501
+            )
 
         return f'{title}\n' + \
             '\n'.join(items) + \
