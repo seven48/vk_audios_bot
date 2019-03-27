@@ -52,26 +52,43 @@ class Track(mongo.Document):
     data_id = mongo.StringField(null=False)
     title = mongo.StringField(null=False)
     artist = mongo.StringField(null=False)
+    link = mongo.StringField(null=False)
     telegram_id = mongo.StringField(null=True)
 
     @staticmethod
     def create(track):
         owner_id, data_id = track.get('data-id').split('_')[:2]
         try:
-            return Track.objects.get(
+            record = Track.objects.get(
                 owner_id=owner_id,
                 data_id=data_id
             )
+            record.update(
+                link=track.get('link')
+            )
+            record.save()
+            return record
         except mongo.DoesNotExist:
             logger.info(f'Track new {owner_id}_{data_id}')
             record = Track(
                 owner_id=owner_id,
                 data_id=data_id,
                 title=track.get('title'),
-                artist=track.get('artist')
+                artist=track.get('artist'),
+                link=track.get('link')
             )
             record.save()
             return record
+
+    @staticmethod
+    def get(owner_id, data_id):
+        try:
+            return Track.objects.get(
+                owner_id=owner_id,
+                data_id=data_id
+            )
+        except mongo.DoesNotExist:
+            return None
 
 
 class Artist(mongo.Document):
@@ -104,7 +121,7 @@ class Playlist(mongo.Document):
 
     @staticmethod
     def create(playlist):
-        pattern = r"^\/.*playlist-(\d+)_(\d+).*access_hash=(\w+).*$"
+        pattern = r'^\/.*playlist-(\d+)_(\d+).*access_hash=(\w+).*$'
         regexp = re.match(pattern, playlist.get('link'))
         owner_id = regexp.group(1)
         data_id = regexp.group(2)
@@ -120,7 +137,7 @@ class Playlist(mongo.Document):
                 owner_id=owner_id,
                 data_id=data_id,
                 access_hash=access_hash,
-                title=playlist.get("title"),
+                title=playlist.get('title'),
                 subtitle=playlist.get('subtitle')
             )
             record.save()

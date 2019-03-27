@@ -38,6 +38,20 @@ class Route:
         except ApiException as e:
             logger.error(e)
 
+    @staticmethod
+    def send_audio(*args, **kwargs):
+        try:
+            return bot.send_audio(*args, **kwargs)
+        except ApiException as e:
+            logger.error(e)
+
+    @staticmethod
+    def delete_message(*args, **kwargs):
+        try:
+            return bot.delete_message(*args, **kwargs)
+        except ApiException as e:
+            logger.error(e)
+
     def primary(self):
         return None
 

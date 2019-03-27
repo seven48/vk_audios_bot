@@ -8,7 +8,7 @@ from src.master import MasterProcess
 from src.utils import logger
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     master = Process(target=MasterProcess, args=(src.queue.QUEUE,))
     master.start()
 

@@ -4,7 +4,7 @@ python:
   - 3.6
 
 install:
-  - pip install -r requirements.txt
+  - pip install flake8 flake8-quotes
 
 script:
-  - find -name "*.py" -not -path "./venv/*" | xargs flake8
+  - find -name "*.py" -not -path "./venv/*" | xargs flake8 --inline-quotes "'"

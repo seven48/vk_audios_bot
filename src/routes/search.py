@@ -1,7 +1,7 @@
 import src.bot
 from src.routes.abstract_route import Route
 from src.models import Track, Artist, Playlist
-from src.utils.escape import telegram_escape
+from src.utils import telegram_escape
 
 bot = src.bot.app
 parser = src.bot.parser
@@ -13,7 +13,7 @@ class SearchRoute(Route):
         return self.send_message(
             self.message.chat.id,
             f'Поиск по запросу `{self.message.text}`',
-            parse_mode="Markdown"
+            parse_mode='Markdown'
         )
 
     def task(self):
@@ -52,8 +52,8 @@ class SearchRoute(Route):
         items = []
         for item in playlists['list']:
             record = Playlist.create(item)
-            _title = telegram_escape(item["title"])
-            subtitle = telegram_escape(item["subtitle"])
+            _title = telegram_escape(item['title'])
+            subtitle = telegram_escape(item['subtitle'])
             items.append(f'/p\_{record.owner_id}\_{record.data_id} *{_title}* - _{subtitle}_')  # noqa: W605,E501
 
         return f'{title}\n' + \
@@ -70,7 +70,7 @@ class SearchRoute(Route):
         items = []
         for item in artists['list']:
             record = Artist.create(item)
-            name = telegram_escape(item["name"])
+            name = telegram_escape(item['name'])
             link = telegram_escape(record.link)
             items.append(f'/a\_{link} *{name}*')  # noqa: W605
 
@@ -88,8 +88,8 @@ class SearchRoute(Route):
         items = []
         for item in tracks['list']:
             record = Track.create(item)
-            artist = telegram_escape(item["artist"])
-            _title = telegram_escape(item["title"])
+            artist = telegram_escape(item['artist'])
+            _title = telegram_escape(item['title'])
             items.append(
                 f'/t\_{record.owner_id}\_{record.data_id} *{artist}* - {_title}'  # noqa: W605,E501
             )

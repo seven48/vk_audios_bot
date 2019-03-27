@@ -1,8 +1,13 @@
-beautifulsoup4==4.7.1
-dnspython==1.16.0
-flake8==3.7.7
-mongoengine==0.17.0
-peewee==3.9.2
-pyTelegramBotAPI==3.6.6
 requests==2.21.0
-urllib3==1.24.1
+python-dotenv==0.10.1
+pyTelegramBotAPI==3.6.6
+bs4==0.0.1
+mongoengine==0.17.0
+dnspython==1.16.0
+
+# VK audio decoder
+vaud==0.4.3
+
+# Linter
+flake8==3.7.7
+flake8-quotes==1.0.0

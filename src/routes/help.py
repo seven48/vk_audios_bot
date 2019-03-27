@@ -11,5 +11,5 @@ class HelpRoute(Route):
             bot.send_message(
                 self.message.chat.id,
                 the_file.read(),
-                parse_mode="Markdown"
+                parse_mode='Markdown'
             )

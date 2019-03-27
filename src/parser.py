@@ -11,6 +11,10 @@ class Parser:
     def __init__(self, username, password):
         self.session = Session()
 
+        self.session.headers['User-Agent'] = 'Mozilla/5.0 ' + \
+            '(X11; Linux x86_64) AppleWebKit/537.36 ' + \
+            '(KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'
+
         self.username = username
         self.password = password
 
@@ -86,14 +90,26 @@ class Parser:
             data['tracks']['full'] = get_all['href'] if get_all else ''
 
             for track in soup.find_all('div', {'class': 'audio_item'}):
-                data_id = track['data-id']
+                data_id = track.get('data-id')
+
+                if not data_id:
+                    continue
+
                 title = track.find('span', {'class': 'ai_title'})
                 artist = track.find('span', {'class': 'ai_artist'})
+                link = track.find('input', {'type': 'hidden'})
+
+                if not link:
+                    logger.error(
+                        f'Could not find track link "{artist} - {title}"'
+                    )
+                    continue
 
                 data['tracks']['list'].append({
                     'data-id': data_id,
                     'title': title.text if title else '',
-                    'artist': artist.text if artist else ''
+                    'artist': artist.text if artist else '',
+                    'link': link.get('value', '')
                 })
 
         return data

@@ -9,6 +9,7 @@ load_dotenv(override=True)
 
 REQUIRED_ENV_VARS = (
     'TOKEN',
+    'VK_USER_ID',
     'USERNAME',
     'PASSWORD'
 )
