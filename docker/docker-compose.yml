@@ -2,6 +2,8 @@ version: "2"
 services:
   vk-audios-bot:
     image: vk-audios-bot
+    links:
+      - "mongodb:mongodb"
     environment:
     - BRANCH=${BRANCH}
     - PROXY=${PROXY}
@@ -11,3 +13,9 @@ services:
     - MONGO_HOST=${MONGO_HOST}
     - PROC_COUNT=${PROC_COUNT}
     - VK_USER_ID=${VK_USER_ID}
+  mongodb:
+    image: mongo:3.4.20-jessie
+    network_mode: "host"
+    # environment:
+    # - MONGO_INITDB_ROOT_USERNAME=${MONGODB_INIT_USER}
+    # - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_INIT_PASS}
