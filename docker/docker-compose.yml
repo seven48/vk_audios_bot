@@ -1,0 +1,13 @@
+version: "2"
+services:
+  vk-audios-bot:
+    image: vk-audios-bot
+    environment:
+    - BRANCH=${BRANCH}
+    - PROXY=${PROXY}
+    - TOKEN=${TOKEN}
+    - USERNAME=${USERNAME}
+    - PASSWORD=${PASSWORD}
+    - MONGO_HOST=${MONGO_HOST}
+    - PROC_COUNT=${PROC_COUNT}
+    - VK_USER_ID=${VK_USER_ID}
