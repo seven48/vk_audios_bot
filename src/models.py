@@ -17,7 +17,7 @@ class User(mongo.Document):
     )
     first_name = mongo.StringField(null=True)
     last_name = mongo.StringField(null=True)
-    username = mongo.StringField(unique=True)
+    username = mongo.StringField()
     is_bot = mongo.BooleanField()
     language_code = mongo.StringField()
 
