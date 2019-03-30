@@ -26,7 +26,16 @@ class User(mongo.Document):
     @staticmethod
     def create(user):
         try:
-            return User.objects.get(user_id=user.id)
+            record = User.objects.get(user_id=user.id)
+            record.update(
+                first_name=user.first_name,
+                last_name=user.last_name,
+                username=user.username,
+                is_bot=user.is_bot,
+                language_code=user.language_code
+            )
+            record.save()
+            return record
         except mongo.DoesNotExist:
             record = User(
                 user_id=user.id,
